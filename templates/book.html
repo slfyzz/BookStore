@@ -1,0 +1,78 @@
+{%extends 'layout.html'%}
+{%block title%}
+    {{ book.title }}
+{%endblock%}
+
+{%block body%}
+    
+    <br>
+    <div class="col-12">
+        <h2>{{ book.title }}</h2>
+        <br>
+        <ul>
+            <li>Author : {{ book.author }}</li>
+            <li>ISBN : {{ book.isbn }}</li>
+            <li>publication year : {{ book.year }}</li>
+            <li>Rating : {{ data['average_rating'] }}  from {{ data['work_ratings_count'] }} user</li>
+        </ul>
+        <br>
+        {%if revSubmit%}
+            <p> if you read "{{ book.title }}" then you can share your experience with us</p>
+            <form action='{{ url_for("book", isbn=book.isbn) }}' method="POST">
+                <div class="form-group" >
+                <label for="Stars">Rate :</label>
+                <select class="form-control col-2" id="Stars" name="rate">
+                    {%for i in range(5)%}
+                        <option value="{{i}}"> {{ i + 1 }} </option>
+                    {%endfor%}
+                </select>
+                </div>
+                <div class="form-group">
+                <label for="review">Review :</label>
+                <textarea class="form-control" id="review" rows="5" name="comment"></textarea>
+                </div>
+                <!--<button type="submit" class="btn btn-primary mb-2">Submit</button>-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submit"> Submit</button>
+                <div class="modal fade" id="submit" tabindex="-1" role="dialog" aria-labelledby="submitlabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="submitlabel">Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        Are you sure to submit that review ? You wont be able to submit another review to that book anymore...
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
+        {%else%}
+            <p>You had Successfully submitted your review</p>
+        {%endif%}
+        <br>
+        <h4>Reviews </h4>
+        {%for comment in comments%}
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="card-title"> User :  {{ comment.name }}</h5>
+                        <p class="card-text"> Rate : '{{ book.title }}' :  {{ comment.rate }} out of 5</p>
+                        {%if comment.comment != ''%}
+                            <p class="card-text"> Review :  {{ comment.comment }}</p>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        {%else%}
+            <p>There is no Reviews yet</p>
+        {%endfor%}
+    </div>
+    
+{%endblock%}

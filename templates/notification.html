@@ -1,0 +1,14 @@
+{%extends 'layout.html'%}
+{%block title%}
+    {{ error }}
+{%endblock%}
+
+{%block body%}
+    <br>
+    <br>
+    <div class="col-12">
+        <p> {{ message }}</p>
+        <a class="btn btn-primary" href="{{ url_for('index') }}" role="button">Go to HomePage</a>
+    </div>
+    
+{%endblock%}

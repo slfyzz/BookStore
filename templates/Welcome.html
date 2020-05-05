@@ -1,0 +1,38 @@
+{%extends 'layout.html'%}
+{%block title%}
+    Welcome
+{%endblock%}
+
+{%block body%}
+    <div class="col-12">
+        <h1>Welecome to Booksera</h1>
+        <p>Here you can search for your book, rate it</p>
+    </div>
+    <br>
+    <br>
+    <div class="col-12">
+        {%if log%}
+        <form action="{{ url_for('search') }}" method="POST">
+            <div class="form-group">
+              <label for="BookTitle">Book Title</label>
+              <input type="text" class="form-control" id="BookTitle" name="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+              <label for="BookAuthor">Book Author</label>
+              <input type="text" class="form-control" id="BookAuthor" name="author" placeholder="Author">
+            </div>
+            <div class="form-group">
+                <label for="ISBN">Book ISBN</label>
+                <input type="text" class="form-control" id="ISBN" name="isbn" placeholder="ISBN">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {%else%}
+            <div class="alert alert-dark" role="alert">
+                You should Sign up to be able to use All features of the Website.
+            </div>
+        {%endif%}
+    </div>
+    
+{%endblock%}
+
